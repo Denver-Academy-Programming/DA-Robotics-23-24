@@ -32,14 +32,11 @@ public class KangarooBot extends LinearOpMode {
         // Wait until the user presses the run button
         waitForStart();
 
-        // Start/Enable use of gamepad 1
-        gamepad1.start = true;
-
         // Checks for the input of gamepad1s left and right thumb sticks then
         // applies that input to which motor it corresponds to
         while (opModeIsActive()) {
             motorLeftPower = gamepad1.left_stick_y;
-            motorRightPower = gamepad1.right_stick_y;
+            motorRightPower = -this.gamepad1.right_stick_y;
 
             motorRight.setPower(motorRightPower);
             motorLeft.setPower(motorLeftPower);
