@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 @TeleOp
 public class KangarooBot extends LinearOpMode {
@@ -18,9 +19,11 @@ public class KangarooBot extends LinearOpMode {
         double motorRightPower;
 
         // Initialize and setup the modules connected to the Control Hub
+        // Also sets the left motor in reverse
         try {
             motorRight = hardwareMap.get(DcMotor.class, "motorRight");
             motorLeft = hardwareMap.get(DcMotor.class, "motorLeft");
+            motorLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         } catch (IllegalArgumentException e) {
             // Prettyfy error for non-tech peoples
             throw new RuntimeException(e);
@@ -35,11 +38,9 @@ public class KangarooBot extends LinearOpMode {
         // Checks for the input of gamepad1s left and right thumb sticks then
         // applies that input to which motor it corresponds to
         while (opModeIsActive()) {
-            motorLeftPower = gamepad1.left_stick_y;
-            motorRightPower = -this.gamepad1.right_stick_y;
 
-            motorRight.setPower(motorRightPower);
-            motorLeft.setPower(motorLeftPower);
+            motorRight.setPower(gamepad1.left_stick_y / 2);
+            motorLeft.setPower(gamepad1.right_stick_y / 2);
 
             telemetry.addData("Right Motor Power", motorRight.getPower());
             telemetry.addData("Left Motor Power", motorLeft.getPower());
